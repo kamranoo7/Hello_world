@@ -1,0 +1,17 @@
+runtime: python39  # Specify the Python version. Adjust according to your compatibility.
+entrypoint: gunicorn -b :$PORT main:app  # Specifies the command that runs your application. 'main' should be replaced with the name of your Python file without the '.py' if it's not named 'main.py'.
+env: standard  # Specifies that you are using the standard environment.
+
+# You can choose to use automatic scaling, basic scaling, or manual scaling by uncommenting one of the following sections.
+# This example uses automatic scaling.
+automatic_scaling:
+  min_instances: 1  # Optional. Specifies the minimum number of instances.
+  max_instances: auto  # Optional. Specifies the maximum number of instances.
+  target_cpu_utilization: 0.65  # Optional. Targets CPU utilization at 65%.
+  target_throughput_utilization: 0.75  # Optional. Targets throughput utilization at 75%.
+  max_concurrent_requests: 50  # Optional. Specifies the maximum number of concurrent requests.
+
+# Optional handlers section for configuring URL handlers and static files.
+handlers:
+- url: /.*  # This configuration directs all URLs to your main application.
+  script: auto  # Required for Python 3.7 and later in the standard environment.
